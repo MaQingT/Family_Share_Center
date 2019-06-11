@@ -9,17 +9,19 @@
 #include <connection.h>
 #include <QDateTime>
 #include <music.h>
+#include <video.h>
+#include <article.h>
 
 int main(int argc,char *argv[])
 {
     QApplication a(argc,argv);
-    User user(1035,"test2","test2",28,0);
-    int id =  ifNewMusic("wert","fasdf",user);
+    User user(1036,"test3","test3",29,0);
+    int id =  ifNewArticle("wert",user);
     qDebug()<<id;
     if(!id){
-        id = addNewMusic("wert","fasdf",user);
+        id = addNewArticle("wert",user);
     }
-    Music music(id,"wert","fasdf","asdfas");
-    addMusicRecord(music,user);
+    Article article(id,"wert","fasdf");
+    addArticleRecord(article,user);
     return a.exec();
 }

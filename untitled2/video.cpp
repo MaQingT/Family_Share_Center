@@ -1,10 +1,11 @@
 #include <video.h>
 
 bool addVideoRecord(Video video,User user){
+    QString familyid = QString::number(user.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addVideoRecord");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("video_record");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
 
@@ -35,7 +36,7 @@ bool addVideoRecord(Video video,User user){
         }
     }
     else{
-        qDebug()<<"database connect fail";
+        qDebug()<<"add video record function connect fail";
         return false;
     }
 }
@@ -45,7 +46,7 @@ int addNewVideo(QString videoName,User user){
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addNewVideo");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("video");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
 
@@ -55,7 +56,7 @@ int addNewVideo(QString videoName,User user){
         QSqlQuery query(db);
         QString I = QString("INSERT INTO `%1`.`video` (`video_name`) VALUES ('%2');").arg(familyid).arg(videoName);
         if(query.exec(I)){
-            QString S = QString("select video_id from `%1`.`video` where music_name = '%2';").arg(familyid).arg(musicName);
+            QString S = QString("select video_id from `%1`.`video` where music_name = '%2';").arg(familyid).arg(videoName);
             query.exec(S);
             query.next();
             int id = query.value(0).toInt();
@@ -89,25 +90,24 @@ int ifNewVideo(QString videoName,User user){
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","ifNewVideo");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("video_record");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
 
     if(db.open()){
         qDebug()<<"if new video function connect";
-        QString S = QString("select * from '%1'.video where user_name = '%2' and artist = '%3'").arg(familyid).arg(videoName);
+        QString S = QString("select * from `%1`.`video` where video_name = '%2';").arg(familyid).arg(videoName);
         QSqlQuery query(db);
         if(query.exec(S) && query.next()){
             qDebug()<<"already have video";
             int id = query.value(0).toInt();
-            qDebug()<<"already have music";
             QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
             QSqlDatabase::removeDatabase(name);
             qDebug()<<"if new video function disconnect";
-            return true;
+            return id;
         }
         else {
             qDebug()<<"dont have video";

@@ -1,13 +1,14 @@
 #include <article.h>
 
 bool addArticleRecord(Article article,User user){
+    QString familyid = QString::number(user.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addArticleRecord");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("article_record");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
-    QString name;
+
     if(db.open()){
         qDebug()<<"add article record function connect";
         QDateTime t;
@@ -15,6 +16,7 @@ bool addArticleRecord(Article article,User user){
         QString I = QString("INSERT INTO `%1`.`article_record` (`article_id`, `user_id`, `time`) VALUES ('%2', '%3', '%4');").arg(QString::number(user.getFamilyId())).arg(QString::number(article.getId())).arg(QString::number(user.getId())).arg(t.currentDateTime().toString("yyyyMMddhhmmss"));
         if(query.exec(I)){
             qDebug()<<"add record success";
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
@@ -24,6 +26,7 @@ bool addArticleRecord(Article article,User user){
         }
         else{
             qDebug()<<"add record fail";
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
@@ -43,7 +46,7 @@ int addNewArticle(QString articleName,User user){
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addNewArticle");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("article");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
 
@@ -86,10 +89,10 @@ int ifNewArticle(QString articleName,User user){
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL",familyid);
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                       //连接数据库端口号，与设置一致
-    db.setDatabaseName("article_record");            //连接数据库名，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
-    QString name;
+
 
     if(db.open()){
         qDebug()<<"if new article function connect";
@@ -98,24 +101,23 @@ int ifNewArticle(QString articleName,User user){
         if(query.exec(S) && query.next()){
             qDebug()<<"already have article";
             int id = query.value(0).toInt();
-
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
             QSqlDatabase::removeDatabase(name);
-            qDebug()<<"if article function disconnect";
+            qDebug()<<"if new article function disconnect";
             return id;
         }
         else {
             qDebug()<<"dont have article";
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
             QSqlDatabase::removeDatabase(name);
-            qDebug()<<"add article record function disconnect";
-            qDebug()<<"adding article now";
-            if(addNewArticle(articleName,user)) return true;
-            else return false;
+            qDebug()<<"if new article function disconnect";
+            return false;
         }
     }
     else {
@@ -132,7 +134,7 @@ QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspec
     db.setDatabaseName(familyId);            //连接数据库名，与设置一致
     db.setUserName("client");               //数据库用户名，与设置一致
     db.setPassword("");                     //数据库密码，与设置一致
-    QString name;
+
     QList<ArticleRecord> records;
     if(db.open()){
         qDebug()<<"sync article record function connect";
@@ -148,6 +150,7 @@ QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspec
                 records<<New;
             }
             qDebug()<<"sync article record success";
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
@@ -157,6 +160,7 @@ QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspec
         }
         else {
             qDebug()<<"sync article record success";
+            QString name;
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。

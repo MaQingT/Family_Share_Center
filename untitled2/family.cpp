@@ -36,7 +36,7 @@ int createFamily(QString name,QString password){
         if(query.exec(CreateMusicTable)) qDebug()<<"Create Music Table";
 
         //创建视频表
-        QString CreateVideoTable = QString("CREATE TABLE `%1`.`video` (`video_id` INT NOT NULL AUTO_INCREMENT,`video_name` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NOT NULL,PRIMARY KEY (`video_id`, `video_name`),UNIQUE INDEX `video_id_UNIQUE` (`video_id` ASC));").arg(family_id);
+        QString CreateVideoTable = QString("CREATE TABLE `%1`.`video` (`video_id` INT NOT NULL AUTO_INCREMENT,`video_name` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NULL,PRIMARY KEY (`video_id`, `video_name`),UNIQUE INDEX `video_id_UNIQUE` (`video_id` ASC));").arg(family_id);
         if(query.exec(CreateVideoTable)) qDebug()<<"Create Video Table";
 
         //创建文章表
