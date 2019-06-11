@@ -7,7 +7,7 @@
 
 class Music{
 public:
-    music(int musicId,QString musicName,QString artist,QString localAddr){
+    Music(int musicId,QString musicName,QString artist,QString localAddr){
         this->musicId = musicId;
         this->musicName = musicName;
         this->artist = artist;
@@ -60,9 +60,9 @@ private:
     QDateTime time;
 };
 
-bool addRecord(Music music,User user);
-bool addNewMusic(Music music,User user);
-bool ifNewMusic(QString musicName,QString artist,User user);
+bool addMusicRecord(Music music,User user);
+int addNewMusic(QString musicName,QString artist,User user);
+int ifNewMusic(QString musicName,QString artist,User user);
 QList<MusicRecord> syncMusicRecord(User user,int start,int numbers,int Tspecial);
 
 #endif // MUSIC_H

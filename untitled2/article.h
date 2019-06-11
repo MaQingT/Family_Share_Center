@@ -29,10 +29,34 @@ private:
 
 };
 
+class ArticleRecord{
+public:
+    ArticleRecord(QString user_name,QString article_mame,QDateTime time){
+        this->user_name = user_name;
+        this->article_mame = article_mame;
+        this->time = time;
+    }
+    QString getUserName(){
+        return this->user_name;
+    }
+    QString getArticleName(){
+        return this->article_mame;
+    }
+    QDateTime getTime(){
+        return this->time;
+    }
+private:
+    QString user_name;
+    QString article_mame;
+    QDateTime time;
+};
+
 bool addArticleRecord(Article article,User user);
 
-bool addNewArticle(QString articleName,User user);
+int addNewArticle(QString articleName,User user);
 
-bool ifNewArticle(QString articleName,User user);
+int ifNewArticle(QString articleName,User user);
+
+QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspecial);
 
 #endif // ARTICLE_H

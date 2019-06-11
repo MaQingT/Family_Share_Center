@@ -32,7 +32,7 @@ int createFamily(QString name,QString password){
         if(query.exec(CreateMemberTable)) qDebug()<<"Create Member Table";
 
         //创建音乐表
-        QString CreateMusicTable = QString("CREATE TABLE `%1`.`music` (`music_id` INT NOT NULL AUTO_INCREMENT,`music_name` VARCHAR(45) NOT NULL,`artist` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NOT NULL,PRIMARY KEY (`music_id`, `music_name`, `artist`),UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC));").arg(family_id);
+        QString CreateMusicTable = QString("CREATE TABLE `%1`.`music` (`music_id` INT NOT NULL AUTO_INCREMENT,`music_name` VARCHAR(45) NOT NULL,`artist` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NULL,PRIMARY KEY (`music_id`, `music_name`, `artist`),UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC));").arg(family_id);
         if(query.exec(CreateMusicTable)) qDebug()<<"Create Music Table";
 
         //创建视频表
@@ -44,15 +44,15 @@ int createFamily(QString name,QString password){
         if(query.exec(CreateArticleTable)) qDebug()<<"Create Article Table";
 
         //创建音乐记录表
-        QString CreateMusicRecordTable = QString("CREATE TABLE `%1`.`music_record` (`music_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`music_id`, `user_id`));").arg(family_id);
+        QString CreateMusicRecordTable = QString("CREATE TABLE `%1`.`music_record` (`record_id` INT NOT NULL AUTO_INCREMENT,`music_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`record_id`));").arg(family_id);
         if(query.exec(CreateMusicRecordTable)) qDebug()<<"Create Music Record Table";
 
         //创建视频记录表
-        QString CreateVideoRecordTable = QString("CREATE TABLE `%1`.`video_record` (`video_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`video_id`, `user_id`));").arg(family_id);
+        QString CreateVideoRecordTable = QString("CREATE TABLE `%1`.`video_record` (`record_id` INT NOT NULL AUTO_INCREMENT,`video_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`record_id`));").arg(family_id);
         if(query.exec(CreateVideoRecordTable)) qDebug()<<"Create Video Record Table";
 
         //创建文章记录表
-        QString CreateArticleRecordTable = QString("CREATE TABLE `%1`.`article_record` (`article_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`article_id`, `user_id`));").arg(family_id);
+        QString CreateArticleRecordTable = QString("CREATE TABLE `%1`.`article_record` (`record_id` INT NOT NULL AUTO_INCREMENT,`article_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`record_id`));").arg(family_id);
         if(query.exec(CreateArticleRecordTable)) qDebug()<<"Create Article Record Table";
 
         QString name;

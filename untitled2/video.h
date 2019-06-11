@@ -68,9 +68,9 @@ private:
 
 bool addVideoRecord(Video video,User user);
 
-bool addNewVideo(QString videoName,User user);
+int addNewVideo(QString videoName,User user);
 
-bool ifNewVideo(QString videoName,User user);
+int ifNewVideo(QString videoName,User user);
 
 QList<VideoRecord> syncVideoRecord(User user,int start,int numbers,int Tspecial);
 

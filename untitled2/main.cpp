@@ -13,11 +13,13 @@
 int main(int argc,char *argv[])
 {
     QApplication a(argc,argv);
-    User user(2134,"asdfas","fasd",16,0);
-    QList<MusicRecord> list = syncMusicRecord(user,0,10,0);
-    while(!list.isEmpty()){
-        MusicRecord New = list.takeFirst();
-        std::cout<<New.getMusicName().toStdString()<<" "<<New.getUserName().toStdString()<<" "<<New.getTime().toString("yyyy-MM-dd hh:mm:ss").toStdString()<<std::endl;
+    User user(1035,"test2","test2",28,0);
+    int id =  ifNewMusic("wert","fasdf",user);
+    qDebug()<<id;
+    if(!id){
+        id = addNewMusic("wert","fasdf",user);
     }
+    Music music(id,"wert","fasdf","asdfas");
+    addMusicRecord(music,user);
     return a.exec();
 }
