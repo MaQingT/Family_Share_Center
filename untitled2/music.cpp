@@ -130,7 +130,7 @@ QList<MusicRecord> syncMusicRecord(User user,int start,int numbers,int Tspecial)
     QList<MusicRecord> records;
     if(db.open()){
         qDebug()<<"sync music record function connect";
-        QString S = QString("SELECT music.music_name,members.user_name FROM `%1`.music,`%1`.music_record,`%1`.members where members.special = '%4' and music_record.music_id = music.music_id and members.user_id = music_record.user_id order by time desc limit %2,%3;")
+        QString S = QString("SELECT music.music_name,members.user_name,music_record.time FROM `%1`.music,`%1`.music_record,`%1`.members where members.special = '%4' and music_record.music_id = music.music_id and members.user_id = music_record.user_id order by time desc limit %2,%3;")
                 .arg(familyId)
                 .arg(QString::number(start))
                 .arg(QString::number(numbers))
@@ -138,7 +138,7 @@ QList<MusicRecord> syncMusicRecord(User user,int start,int numbers,int Tspecial)
         QSqlQuery query(db);
         if(query.exec(S)){
             while(query.next()){
-                MusicRecord New(query.value(1).toString(),query.value(0).toString(),query.value(2).toString());
+                MusicRecord New(query.value(1).toString(),query.value(0).toString(),query.value(2).toDateTime());
                 records<<New;
             }
             qDebug()<<"sync music record success";

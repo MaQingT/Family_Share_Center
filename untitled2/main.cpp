@@ -17,7 +17,7 @@ int main(int argc,char *argv[])
     QList<MusicRecord> list = syncMusicRecord(user,0,10,0);
     while(!list.isEmpty()){
         MusicRecord New = list.takeFirst();
-        std::cout<<New.getMusicName().toStdString()<<" "<<New.getUserName().toStdString()<<" "<<New.getTime().toStdString()<<std::endl;
+        std::cout<<New.getMusicName().toStdString()<<" "<<New.getUserName().toStdString()<<" "<<New.getTime().toString("yyyy-MM-dd hh:mm:ss").toStdString()<<std::endl;
     }
     return a.exec();
 }

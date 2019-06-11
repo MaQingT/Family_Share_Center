@@ -116,3 +116,51 @@ bool ifNewVideo(QString videoName,User user){
         return false;
     }
 }
+
+QList<VideoRecord> syncVideoRecord(User user,int start,int numbers,int Tspecial){
+    QString familyId = QString::number(user.getFamilyId());
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL",familyId);
+    db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
+    db.setPort(3306);                       //连接数据库端口号，与设置一致
+    db.setDatabaseName(familyId);            //连接数据库名，与设置一致
+    db.setUserName("client");               //数据库用户名，与设置一致
+    db.setPassword("");                     //数据库密码，与设置一致
+    QString name;
+    QList<VideoRecord> records;
+    if(db.open()){
+        qDebug()<<"sync video record function connect";
+        QString S = QString("SELECT video.video_name,members.user_name,video_record.time FROM `%1`.video,`%1`.video_record,`%1`.members where members.special = '%4' and video_record.video_id = video.video_id and members.user_id = video_record.user_id order by time desc limit %2,%3;")
+                .arg(familyId)
+                .arg(QString::number(start))
+                .arg(QString::number(numbers))
+                .arg(QString::number(Tspecial));
+        QSqlQuery query(db);
+        if(query.exec(S)){
+            while(query.next()){
+                MusicRecord New(query.value(1).toString(),query.value(0).toString(),query.value(2).toDateTime());
+                records<<New;
+            }
+            qDebug()<<"sync video record success";
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync music record function disconnect";
+            return records;
+        }
+        else {
+            qDebug()<<"sync video record success";
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync video record function disconnect";
+            return records;
+        }
+
+    }
+    else {
+        qDebug()<<"connect fail";
+        return records;
+    }
+}

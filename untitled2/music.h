@@ -39,7 +39,7 @@ private:
 
 class MusicRecord{
 public:
-    MusicRecord(QString user_name,QString music_name,QString time){
+    MusicRecord(QString user_name,QString music_name,QDateTime time){
         this->user_name = user_name;
         this->music_name = music_name;
         this->time = time;
@@ -51,13 +51,13 @@ public:
     QString getMusicName(){
         return this->music_name;
     }
-    QString getTime(){
+    QDateTime getTime(){
         return this->time;
     }
 private:
     QString user_name;
     QString music_name;
-    QString time;
+    QDateTime time;
 };
 
 bool addRecord(Music music,User user);

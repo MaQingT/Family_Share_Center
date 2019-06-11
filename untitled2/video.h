@@ -37,10 +37,41 @@ private:
     QString localAddr;
 };
 
+class VideoRecord{
+public:
+
+    VideoRecord(QString user_name,QString video_name,QDateTime time){
+        this->user_name = user_name;
+        this->video_name = video_name;
+        this->time = time;
+    }
+
+    QString getUserName(){
+        return this->user_name;
+    }
+
+    QString getVideoName(){
+        return this->video_name;
+    }
+
+    QDateTime getTime(){
+        return this->time;
+    }
+
+private:
+
+    QString user_name;
+    QString video_name;
+    QDateTime time;
+
+};
+
 bool addVideoRecord(Video video,User user);
 
 bool addNewVideo(QString videoName,User user);
 
 bool ifNewVideo(QString videoName,User user);
+
+QList<VideoRecord> syncVideoRecord(User user,int start,int numbers,int Tspecial);
 
 #endif // VIDEO_H
