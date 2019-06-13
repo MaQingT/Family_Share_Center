@@ -4,6 +4,8 @@
 #include <QString>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QDebug>
+#include <user.h>
 
 class Communication{
 public:
