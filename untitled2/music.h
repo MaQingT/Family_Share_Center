@@ -63,6 +63,6 @@ private:
 bool addMusicRecord(Music music,User user);
 int addNewMusic(QString musicName,QString artist,User user);
 int ifNewMusic(QString musicName,QString artist,User user);
-QList<MusicRecord> syncMusicRecord(User user,int start,int numbers,int Tspecial);
+QList<MusicRecord> syncMusicRecord(User user,int Tspecial);
 
 #endif // MUSIC_H

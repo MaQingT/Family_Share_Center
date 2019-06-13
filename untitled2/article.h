@@ -57,6 +57,6 @@ int addNewArticle(QString articleName,User user);
 
 int ifNewArticle(QString articleName,User user);
 
-QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspecial);
+QList<ArticleRecord> syncArticleRecord(User user,int Tspecial);
 
 #endif // ARTICLE_H

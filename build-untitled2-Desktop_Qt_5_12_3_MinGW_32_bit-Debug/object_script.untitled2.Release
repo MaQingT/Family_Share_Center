@@ -1,0 +1,11 @@
+release/article.o
+release/communication.o
+release/connection.o
+release/family.o
+release/main.o
+release/mainwindow.o
+release/messages.o
+release/music.o
+release/user.o
+release/video.o
+release/moc_mainwindow.o

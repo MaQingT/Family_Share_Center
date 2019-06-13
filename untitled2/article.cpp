@@ -126,7 +126,7 @@ int ifNewArticle(QString articleName,User user){
     }
 }
 
-QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspecial){
+QList<ArticleRecord> syncArticleRecord(User user, int Tspecial){
     QString familyId = QString::number(user.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL",familyId);
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
@@ -138,10 +138,8 @@ QList<ArticleRecord> syncArticleRecord(User user,int start,int numbers,int Tspec
     QList<ArticleRecord> records;
     if(db.open()){
         qDebug()<<"sync article record function connect";
-        QString S = QString("SELECT article.article_name,members.user_name,article_record.time FROM `%1`.article,`%1`.article_record,`%1`.members where members.special = '%4' and article_record.article_id = article.article_id and members.user_id = article_record.user_id order by time desc limit %2,%3;")
+        QString S = QString("SELECT article.article_name,members.user_name,article_record.time FROM `%1`.article,`%1`.article_record,`%1`.members where members.special = '%4' and article_record.article_id = article.article_id and members.user_id = article_record.user_id order by time desc;")
                 .arg(familyId)
-                .arg(QString::number(start))
-                .arg(QString::number(numbers))
                 .arg(QString::number(Tspecial));
         QSqlQuery query(db);
         if(query.exec(S)){

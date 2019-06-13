@@ -72,6 +72,6 @@ int addNewVideo(QString videoName,User user);
 
 int ifNewVideo(QString videoName,User user);
 
-QList<VideoRecord> syncVideoRecord(User user,int start,int numbers,int Tspecial);
+QList<VideoRecord> syncVideoRecord(User user,int Tspecial);
 
 #endif // VIDEO_H

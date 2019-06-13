@@ -26,19 +26,23 @@ CONFIG += c++11
 
 SOURCES += \
         article.cpp \
+        communication.cpp \
         connection.cpp \
         family.cpp \
         main.cpp \
         mainwindow.cpp \
+        messages.cpp \
         music.cpp \
         user.cpp \
         video.cpp
 
 HEADERS += \
         article.h \
+        communication.h \
         connection.h \
         family.h \
         mainwindow.h \
+        messages.h \
         music.h \
         user.h \
         video.h

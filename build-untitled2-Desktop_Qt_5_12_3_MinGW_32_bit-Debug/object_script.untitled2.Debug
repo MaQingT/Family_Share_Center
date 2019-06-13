@@ -1,0 +1,11 @@
+debug/article.o
+debug/communication.o
+debug/connection.o
+debug/family.o
+debug/main.o
+debug/mainwindow.o
+debug/messages.o
+debug/music.o
+debug/user.o
+debug/video.o
+debug/moc_mainwindow.o
