@@ -1,7 +1,7 @@
 #include <communication.h>
 
 bool sendPrivateMessages(User me,QString he,QString content){
-    QString familyId = QString::number(user.getFamilyId());
+    QString familyId = QString::number(me.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","sendPrivateMessages");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
     db.setPort(3306);                 //连接数据库端口号，与设置一致
@@ -25,7 +25,7 @@ bool sendPrivateMessages(User me,QString he,QString content){
                 name = QSqlDatabase::database().connectionName();
             }
             QSqlDatabase::removeDatabase(name);
-            addrecord(me,you,currentTime);
+            addrecord(me,he,currentTime);
             return true;
         }
         else {
@@ -64,6 +64,7 @@ void addrecord(User me,QString he,QString currentTime){
                     .arg(currentTime)
                     .arg(me.getName())
                     .arg(he);
+            query.exec(U);
         }
         else {
             QString I = QString("INSERT INTO `Communication`.`comunication_record` (`senderName`, `recieverName`, `sentNumber`, `lastTime`) VALUES ('%1', '%2', '1', '%3');").arg(me.getName()).arg(he).arg(currentTime);
@@ -76,3 +77,5 @@ void addrecord(User me,QString he,QString currentTime){
 
     }
 }
+
+

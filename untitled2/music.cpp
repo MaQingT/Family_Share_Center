@@ -57,7 +57,11 @@ bool addMusicRecord(Music music,User user){
         qDebug()<<"add music record function connect";
         QDateTime t;
         QSqlQuery query(db);
-        QString I = QString("INSERT INTO `%1`.`music_record` (`music_id`, `user_id`, `time`) VALUES ('%2', '%3', '%4');").arg(QString::number(user.getFamilyId())).arg(QString::number(music.getId())).arg(QString::number(user.getId())).arg(t.currentDateTime().toString("yyyyMMddhhmmss"));
+        QString I = QString("INSERT INTO `%1`.`music_record` (`music_id`, `user_id`, `time`) VALUES ('%2', '%3', '%4');")
+                .arg(QString::number(user.getFamilyId()))
+                .arg(QString::number(music.getId()))
+                .arg(QString::number(user.getId()))
+                .arg(t.currentDateTime().toString("yyyyMMddhhmmss"));
         qDebug()<<I;
         if(query.exec(I)){
             qDebug()<<"add record success";

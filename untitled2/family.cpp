@@ -28,19 +28,19 @@ int createFamily(QString name,QString password){
         if(query.exec(CreateSchema)) qDebug()<<"Create Schema";
 
         //创建家庭成员表
-        QString CreateMemberTable = QString("CREATE TABLE `%1`.`members` (  `user_id` INT NOT NULL, `user_name` VARCHAR(45) NOT NULL, `special` INT NOT NULL,PRIMARY KEY (`user_id`));").arg(family_id);
+        QString CreateMemberTable = QString("CREATE TABLE `%1`.`members` (  `user_id` INT NOT NULL, `user_name` NVARCHAR(45) NOT NULL, `special` INT NOT NULL,PRIMARY KEY (`user_id`));").arg(family_id);
         if(query.exec(CreateMemberTable)) qDebug()<<"Create Member Table";
 
         //创建音乐表
-        QString CreateMusicTable = QString("CREATE TABLE `%1`.`music` (`music_id` INT NOT NULL AUTO_INCREMENT,`music_name` VARCHAR(45) NOT NULL,`artist` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NULL,PRIMARY KEY (`music_id`, `music_name`, `artist`),UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC));").arg(family_id);
+        QString CreateMusicTable = QString("CREATE TABLE `%1`.`music` (`music_id` INT NOT NULL AUTO_INCREMENT,`music_name` NVARCHAR(45) NOT NULL,`artist` NVARCHAR(45) NOT NULL,`file_Addr` NVARCHAR(100) NULL,PRIMARY KEY (`music_id`, `music_name`, `artist`),UNIQUE INDEX `music_id_UNIQUE` (`music_id` ASC));").arg(family_id);
         if(query.exec(CreateMusicTable)) qDebug()<<"Create Music Table";
 
         //创建视频表
-        QString CreateVideoTable = QString("CREATE TABLE `%1`.`video` (`video_id` INT NOT NULL AUTO_INCREMENT,`video_name` VARCHAR(45) NOT NULL,`file_Addr` VARCHAR(100) NULL,PRIMARY KEY (`video_id`, `video_name`),UNIQUE INDEX `video_id_UNIQUE` (`video_id` ASC));").arg(family_id);
+        QString CreateVideoTable = QString("CREATE TABLE `%1`.`video` (`video_id` INT NOT NULL AUTO_INCREMENT,`video_name` NVARCHAR(45) NOT NULL,`file_Addr` NVARCHAR(100) NULL,PRIMARY KEY (`video_id`, `video_name`),UNIQUE INDEX `video_id_UNIQUE` (`video_id` ASC));").arg(family_id);
         if(query.exec(CreateVideoTable)) qDebug()<<"Create Video Table";
 
         //创建文章表
-        QString CreateArticleTable = QString("CREATE TABLE `%1`.`article` (`article_id` INT NOT NULL AUTO_INCREMENT,`article_name` VARCHAR(45) NOT NULL,`URL` VARCHAR(100) NULL,PRIMARY KEY (`article_id`),UNIQUE INDEX `article_id_UNIQUE` (`article_id` ASC));").arg(family_id);
+        QString CreateArticleTable = QString("CREATE TABLE `%1`.`article` (`article_id` INT NOT NULL AUTO_INCREMENT,`article_name` NVARCHAR(45) NOT NULL,`URL` NVARCHAR(100) NULL,PRIMARY KEY (`article_id`),UNIQUE INDEX `article_id_UNIQUE` (`article_id` ASC));").arg(family_id);
         if(query.exec(CreateArticleTable)) qDebug()<<"Create Article Table";
 
         //创建音乐记录表
@@ -54,6 +54,9 @@ int createFamily(QString name,QString password){
         //创建文章记录表
         QString CreateArticleRecordTable = QString("CREATE TABLE `%1`.`article_record` (`record_id` INT NOT NULL AUTO_INCREMENT,`article_id` INT NOT NULL,`user_id` INT NOT NULL,`time` DATETIME(6) NOT NULL,PRIMARY KEY (`record_id`));").arg(family_id);
         if(query.exec(CreateArticleRecordTable)) qDebug()<<"Create Article Record Table";
+
+        QString CreateMessagesTable = QString("CREATE TABLE `%1`.`messages` (`messages_id` INT NOT NULL AUTO_INCREMENT,`user_name` NVARCHAR(45) NOT NULL,`content` NVARCHAR(140) NOT NULL,`time` DATETIME(6) NULL,PRIMARY KEY (`messages_id`));").arg(family_id);
+        if(query.exec(CreateMessagesTable)) qDebug()<<"Create Messages Table";
 
         QString name;
         {

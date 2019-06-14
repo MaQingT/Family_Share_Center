@@ -6,6 +6,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <user.h>
+#include <QDateTime>
 
 class Communication{
 public:
@@ -38,5 +39,8 @@ private:
     QString content;
     QString time;
 };
+
+bool sendPrivateMessages(User me,QString he,QString content);
+void addrecord(User me,QString he,QString currentTime);
 
 #endif // COMMUNICATION_H
