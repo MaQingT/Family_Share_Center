@@ -190,7 +190,7 @@ QList<Article> syncArticleCollection(User user){
         QSqlQuery query(db);
         if(query.exec(S)){
             while(query.next()){
-                Article New(query.value(0).toInt(),query.value(1).toString());
+                Article New(query.value(0).toInt(),query.value(1).toString(),query.value(2).toString());
                 collection<<New;
             }
             qDebug()<<"sync article collection success";

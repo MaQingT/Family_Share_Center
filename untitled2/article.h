@@ -4,6 +4,7 @@
 #include <QString>
 #include <user.h>
 #include <QDateTime>
+#include <QtWidgets/QMessageBox>
 
 class Article{
 public:
