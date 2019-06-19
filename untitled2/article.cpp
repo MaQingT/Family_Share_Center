@@ -55,7 +55,7 @@ int addNewArticle(QString articleName,User user){
         QSqlQuery query(db);
         QString I = QString("INSERT INTO `%1`.`article` (`article_name`) VALUES ('%2');").arg(familyid).arg(articleName);
         if(query.exec(I)){
-            QString S = QString("select video_id from `%1`.`video` where music_name = '%2';").arg(familyid).arg(articleName);
+            QString S = QString("select article_id from `%1`.`article` where article_name = '%2';").arg(familyid).arg(articleName);
             query.exec(S);
             query.next();
             int id = query.value(0).toInt();
