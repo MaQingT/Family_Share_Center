@@ -63,4 +63,10 @@ int ifNewVideo(QString videoName,User user);
 
 QList<VideoRecord> syncVideoRecord(User user,int Tspecial);
 
+QList<Video> syncVideoCollection(User user);
+
+bool addNewVideoCollect(User user,Video video);
+
+bool deleteVideoCollect(User user,Video video);
+
 #endif // VIDEO_H
