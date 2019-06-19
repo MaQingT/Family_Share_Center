@@ -173,3 +173,147 @@ QList<ArticleRecord> syncArticleRecord(User user, int Tspecial){
         return records;
     }
 }
+
+QList<Article> syncArticleCollection(User user){
+    QString familyId = QString::number(user.getFamilyId());
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","syncArticleCollection");
+    db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
+    db.setPort(3306);                       //连接数据库端口号，与设置一致
+    db.setDatabaseName(familyId);            //连接数据库名，与设置一致
+    db.setUserName("client");               //数据库用户名，与设置一致
+    db.setPassword("");                     //数据库密码，与设置一致
+
+    QList<Article> collection;
+    if(db.open()){
+        qDebug()<<"sync article collection function connect";
+        QString S = QString("SELECT article.article_id,article.article_name,article.article_URL FROM `%1`.collect_article,`%1`.article where collect_article.user_name = '%2' and  article.article_name = collect_article.article_name;").arg(familyId).arg(user.getName());
+        QSqlQuery query(db);
+        if(query.exec(S)){
+            while(query.next()){
+                Article New(query.value(0).toInt(),query.value(1).toString());
+                collection<<New;
+            }
+            qDebug()<<"sync article collection success";
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync article record function disconnect";
+            return collection;
+        }
+        else {
+            qDebug()<<"sync article record success";
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync article record function disconnect";
+            return collection;
+        }
+
+    }
+    else {
+        qDebug()<<"sync article collection function connect fail";
+        return collection;
+    }
+}
+
+bool addNewArticleCollect(User user,Article article){
+    QString familyId = QString::number(user.getFamilyId());
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addNewArticleCollect");
+    db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
+    db.setPort(3306);                       //连接数据库端口号，与设置一致
+    db.setDatabaseName(familyId);            //连接数据库名，与设置一致
+    db.setUserName("client");               //数据库用户名，与设置一致
+    db.setPassword("");
+
+    if(db.open()){
+        qDebug()<<"add new article collection function connect";
+        QString S = QString("SELECT * FROM `1001`.collect_article where user_name = '123' and article_name = 'asdfasdf';")
+                .arg(familyId)
+                .arg(user.getName())
+                .arg(article.getName());
+        QString I = QString("INSERT INTO `%1`.`collect_article` (`user_name`, `article_name`) VALUES ('%2', '%3');")
+                .arg(familyId)
+                .arg(user.getName())
+                .arg(article.getName());
+        QSqlQuery query(db);
+        if(query.exec(S) && query.next()){
+            QMessageBox::information(NULL,"添加失败","重复添加",QMessageBox::Yes);
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            return false;
+        }
+        else if(query.exec(I)){
+            QMessageBox::information(NULL,"添加成功","添加成功！！！",QMessageBox::Yes);
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            return true;
+        }
+        else {
+            QMessageBox::information(NULL,"添加失败","添加失败！！！",QMessageBox::Yes);
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            return false;
+        }
+    }
+    else {
+        qDebug()<<"add new article collection function connect fail";
+        return false;
+    }
+}
+
+bool deleteArticleCollect(User user,Article article){
+    QString familyId = QString::number(user.getFamilyId());
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addNewArticleCollect");
+    db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
+    db.setPort(3306);                       //连接数据库端口号，与设置一致
+    db.setDatabaseName(familyId);            //连接数据库名，与设置一致
+    db.setUserName("client");               //数据库用户名，与设置一致
+    db.setPassword("");
+
+    if(db.open()){
+        qDebug()<<"delete article collection function connect";
+        QString D = QString("delete from `%1`.collect_article where user_name = '%2' and article_name = '%3';")
+                .arg(familyId)
+                .arg(user.getName())
+                .arg(article.getName());
+        QSqlQuery query(db);
+        if(query.exec(D)){
+            qDebug()<<"delete article collection success";
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"delete article collection function disconnect";
+            return true;
+        }
+        else {
+            qDebug()<<"delete article collection fail";
+            QString name;
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"delete article collection function disconnect";
+            return false;
+        }
+    }
+    else {
+        qDebug()<<"delete article collection function connect fail";
+        return false;
+    }
+}
+

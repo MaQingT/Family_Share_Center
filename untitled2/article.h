@@ -16,7 +16,7 @@ public:
     int getId(){
         return this->articleid;
     }
-    QString getArticleName(){
+    QString getName(){
         return this->articleName;
     }
     QString getURL(){
@@ -63,5 +63,11 @@ int addNewArticle(QString articleName,User user);
 int ifNewArticle(QString articleName,User user);
 
 QList<ArticleRecord> syncArticleRecord(User user,int Tspecial);
+
+QList<Article> syncArticleCollection(User user);
+
+bool addNewArticleCollect(User user,Article article);
+
+bool deleteArticleCollect(User user,Article article);
 
 #endif // ARTICLE_H
