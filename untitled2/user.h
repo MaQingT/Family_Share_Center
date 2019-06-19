@@ -31,10 +31,10 @@ public:
         return this->id;
     }
     QString getName(){
-        return this->psw;
+        return this->name;
     }
     QString getPsw(){
-        return this->name;
+        return this->psw;
     }
     int getFamilyId(){
         return this->family_id;

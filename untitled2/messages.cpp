@@ -12,7 +12,7 @@ bool createMessageRecord(User user,QString content){
     if(db.open()){
         qDebug()<<"create message record function connect";
         QDateTime t;
-        QString I = QString("INSERT INTO `%1`.`messages` (`user_id`, `content`, `time`) VALUES ('%2', '%3', '%4');").arg(familyId).arg(QString::number(user.getId())).arg(content).arg(t.currentDateTime().toString("yyyyMMddhhmmss"));
+        QString I = QString("INSERT INTO `%1`.`messages` (`user_name`, `content`, `time`) VALUES ('%2', '%3', '%4');").arg(familyId).arg(user.getName()).arg(content).arg(t.currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
         QSqlQuery query(db);
         if(query.exec(I)){
             qDebug()<<"add message success";
@@ -53,11 +53,11 @@ QList<Messages> syncMessageRecords(User user){
     QList<Messages> records;
     if(db.open()){
         qDebug()<<"sync messages function connect";
-        QString S = QString("select memebers.user_name,messages.content,messages.time from `%1`.members,`%1`.messages where members.user_id = messages.user_id;").arg(familyId);
+        QString S = QString("select * from `%1`.messages;").arg(familyId);
         QSqlQuery query(db);
         if(query.exec(S)){
             while(query.next()){
-                Messages New(query.value(1).toString(),query.value(0).toString(),query.value(2).toString());
+                Messages New(query.value(1).toString(),query.value(2).toString(),query.value(3).toString());
                 records<<New;
             }
             qDebug()<<"sync messages success";

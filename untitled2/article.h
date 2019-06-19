@@ -31,10 +31,11 @@ private:
 
 class ArticleRecord{
 public:
-    ArticleRecord(QString user_name,QString article_mame,QDateTime time){
+    ArticleRecord(QString user_name,QString article_mame,QDateTime time,QString URL){
         this->user_name = user_name;
         this->article_mame = article_mame;
         this->time = time;
+        this->URL = URL;
     }
     QString getUserName(){
         return this->user_name;
@@ -45,10 +46,14 @@ public:
     QDateTime getTime(){
         return this->time;
     }
+    QString getURL(){
+        return this->URL;
+    }
 private:
     QString user_name;
     QString article_mame;
     QDateTime time;
+    QString URL;
 };
 
 bool addArticleRecord(Article article,User user);

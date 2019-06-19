@@ -138,13 +138,13 @@ QList<ArticleRecord> syncArticleRecord(User user, int Tspecial){
     QList<ArticleRecord> records;
     if(db.open()){
         qDebug()<<"sync article record function connect";
-        QString S = QString("SELECT article.article_name,members.user_name,article_record.time FROM `%1`.article,`%1`.article_record,`%1`.members where members.special = '%4' and article_record.article_id = article.article_id and members.user_id = article_record.user_id order by time desc;")
+        QString S = QString("SELECT article.article_name , article.URL , members.user_name , article_record.`time` FROM `1001`.article_record,`1001`.members,`1001`.article where article.article_id = article_record.article_id and  members.user_id = article_record.user_id order by time desc;")
                 .arg(familyId)
                 .arg(QString::number(Tspecial));
         QSqlQuery query(db);
         if(query.exec(S)){
             while(query.next()){
-                ArticleRecord New(query.value(1).toString(),query.value(0).toString(),query.value(2).toDateTime());
+                ArticleRecord New(query.value(1).toString(),query.value(0).toString(),query.value(2).toDateTime(),query.value(3).toString());
                 records<<New;
             }
             qDebug()<<"sync article record success";

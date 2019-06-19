@@ -4,14 +4,14 @@
 #include <QDateTime>
 #include <user.h>
 #include <QDebug>
+#include <QtWidgets/QMessageBox>
 
 class Music{
 public:
-    Music(int musicId,QString musicName,QString artist,QString localAddr){
+    Music(int musicId,QString musicName,QString style){
         this->musicId = musicId;
         this->musicName = musicName;
-        this->artist = artist;
-        this->localAddr = localAddr;
+        this->style = style;
     }
 
     int getId(){
@@ -22,19 +22,14 @@ public:
         return this->musicName;
     }
 
-    QString getArtist(){
-        return this->artist;
-    }
-
-    QString getLocalAddr(){
-        return this->localAddr;
+    QString getStyle(){
+        return this->style;
     }
 
 private:
     int musicId;
     QString musicName;
-    QString artist;
-    QString localAddr;
+    QString style;
 };
 
 class MusicRecord{
@@ -64,5 +59,7 @@ bool addMusicRecord(Music music,User user);
 int addNewMusic(QString musicName,QString artist,User user);
 int ifNewMusic(QString musicName,QString artist,User user);
 QList<MusicRecord> syncMusicRecord(User user,int Tspecial);
+QList<Music> syncMusicCollection(User user);
+bool addNewMusicCollect(User user,Music music);
 
 #endif // MUSIC_H

@@ -4,14 +4,13 @@
 #include <QDateTime>
 #include <user.h>
 #include <QDebug>
+#include <QtWidgets/QMessageBox>
 
 class Video{
 public:
-    Video(int videoId,QString videoName,QString artist,QString localAddr){
+    Video(int videoId,QString videoName){
         this->videoId = videoId;
         this->videoName = videoName;
-        this->artist = artist;
-        this->localAddr = localAddr;
     }
 
     int getId(){
@@ -22,19 +21,9 @@ public:
         return this->videoName;
     }
 
-    QString getArtist(){
-        return this->artist;
-    }
-
-    QString getLocalAddr(){
-        return this->localAddr;
-    }
-
 private:
     int videoId;
     QString videoName;
-    QString artist;
-    QString localAddr;
 };
 
 class VideoRecord{
