@@ -12,4 +12,6 @@
 
 QList<Music> recommendMusic(User user);
 
+QList<Video> recommendVideo(User user);
+
 #endif // RECOMMEND_H
