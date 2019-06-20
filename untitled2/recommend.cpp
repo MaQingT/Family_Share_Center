@@ -33,12 +33,12 @@ QList<Music> recommendMusic(User user){
         }
         else {
             QString name;
-            qDebug()<<"recommend video record success";
+            qDebug()<<"recommend music record success";
             {
                 name = QSqlDatabase::database().connectionName();
             }//超出作用域，隐含对象QSqlDatabase::database()被删除。
             QSqlDatabase::removeDatabase(name);
-            qDebug()<<"sync video record function disconnect";
+            qDebug()<<"sync music record function disconnect";
             return recommend;
         }
     }
@@ -92,6 +92,54 @@ QList<Video> recommendVideo(User user){
     }
     else {
         qDebug()<<"recommend video function connect fail";
+        return recommend;
+    }
+}
+
+QList<Article> recommendArticle(User user){
+    QString familyid = QString::number(user.getFamilyId());
+    QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","recommendArticle");
+    db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
+    db.setPort(3306);                       //连接数据库端口号，与设置一致
+    db.setDatabaseName(familyid);            //连接数据库名，与设置一致
+    db.setUserName("client");               //数据库用户名，与设置一致
+    db.setPassword("");                     //数据库密码，与设置一致
+
+    QList<Article> recommend;
+    if(db.open()){
+
+        qDebug()<<"recommend article function connect";
+        QString S = QString("SELECT article.article_id,article.article_name,articl.URL FROM `%1`.article where article.article_id not in( select article.article_id from `%1`.article,`%1`.collect_article where article.article_name = collect_article.article_name and collect_article.user_name = '%2' ) ORDER BY RAND() LIMIT 5;")
+                .arg(familyid)
+                .arg(user.getName());
+        QSqlQuery query(db);
+        if(query.exec(S)){
+            while(query.next()){
+                Article New(query.value(0).toInt(),query.value(1).toString(),query.value(2).toString());
+                recommend<<New;
+            }
+            QString name;
+            qDebug()<<"recommend article record success";
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync article record function disconnect";
+            return recommend;
+        }
+        else {
+            QString name;
+            qDebug()<<"recommend article record success";
+            {
+                name = QSqlDatabase::database().connectionName();
+            }//超出作用域，隐含对象QSqlDatabase::database()被删除。
+            QSqlDatabase::removeDatabase(name);
+            qDebug()<<"sync article record function disconnect";
+            return recommend;
+        }
+    }
+    else {
+        qDebug()<<"recommend article function connect fail";
         return recommend;
     }
 }
