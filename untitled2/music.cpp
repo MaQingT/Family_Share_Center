@@ -1,6 +1,6 @@
 #include <music.h>
 
-int addNewMusic(QString musicName,QString artist,User user){
+int addNewMusic(QString musicName,User user){
     QString familyid = QString::number(user.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","addNewMusic");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
@@ -12,7 +12,7 @@ int addNewMusic(QString musicName,QString artist,User user){
     if(db.open()){
         qDebug()<<"add new music function connect";
         QSqlQuery query(db);
-        QString I = QString("INSERT INTO `%1`.`music` (`music_name`, `artist`) VALUES ('%2', '%3');").arg(familyid).arg(musicName).arg(artist);
+        QString I = QString("INSERT INTO `%1`.`music` (`music_name`) VALUES ('%2');").arg(familyid).arg(musicName);
         qDebug()<<I;
         if(query.exec(I)){
             QString S=QString("select music_id from `%1`.`music` where music_name = '%2';").arg(familyid).arg(musicName);
@@ -88,7 +88,7 @@ bool addMusicRecord(Music music,User user){
     }
 }
 
-int ifNewMusic(QString musicName,QString artist,User user){
+int ifNewMusic(QString musicName, User user){
     QString familyid = QString::number(user.getFamilyId());
     QSqlDatabase db=QSqlDatabase::addDatabase("QMYSQL","ifNewMusic");
     db.setHostName("114.116.191.248");      //连接数据库主机名，这里需要注意（若填的为”127.0.0.1“，出现不能连接，则改为localhost)
@@ -99,7 +99,7 @@ int ifNewMusic(QString musicName,QString artist,User user){
 
     if(db.open()){
         qDebug()<<"if music function connect";
-        QString S = QString("select * from `%1`.music where music_name = '%2' and artist = '%3';").arg(familyid).arg(musicName).arg(artist);
+        QString S = QString("select * from `%1`.music where music_name = '%2';").arg(familyid).arg(musicName);
         qDebug()<<S;
         QSqlQuery query(db);
         if(query.exec(S) && query.next()){

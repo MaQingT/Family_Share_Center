@@ -56,10 +56,15 @@ private:
 };
 
 bool addMusicRecord(Music music,User user);
-int addNewMusic(QString musicName,QString artist,User user);
-int ifNewMusic(QString musicName,QString artist,User user);
+
+int addNewMusic(QString musicName,User user);
+
+int ifNewMusic(QString musicName,User user);
+
 QList<MusicRecord> syncMusicRecord(User user,int Tspecial);
+
 QList<Music> syncMusicCollection(User user);
+
 bool addNewMusicCollect(User user,Music music);
 
 #endif // MUSIC_H
