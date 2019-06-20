@@ -6,6 +6,7 @@ release/main.o
 release/mainwindow.o
 release/messages.o
 release/music.o
+release/recommend.o
 release/user.o
 release/video.o
 release/moc_mainwindow.o

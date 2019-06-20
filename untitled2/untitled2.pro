@@ -33,6 +33,7 @@ SOURCES += \
         mainwindow.cpp \
         messages.cpp \
         music.cpp \
+        recommend.cpp \
         user.cpp \
         video.cpp
 
@@ -44,6 +45,7 @@ HEADERS += \
         mainwindow.h \
         messages.h \
         music.h \
+        recommend.h \
         user.h \
         video.h
 

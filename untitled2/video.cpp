@@ -168,7 +168,7 @@ QList<VideoRecord> syncVideoRecord(User user, int Tspecial){
 
     }
     else {
-        qDebug()<<"connect fail";
+        qDebug()<<"sync video record function connect fail";
         return records;
     }
 }
